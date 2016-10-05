@@ -20,25 +20,17 @@ class responseBuilder
 
     public function respond($data)
     {
-        switch($this->type)
-        {
-            case 'json' :
-                $builder = new jsonBuilder($data);
-                echo $builder->build();
-                break;
+        //refactored based on the factory we've just written
+        $response = responseFactory::create($this->type);
 
-            case 'html' :
-                $builder = new htmlBuilder($data);
-                echo $builder->build();
-                break;
+        echo $response->build();
 
-            case 'xml' :
-                $builder = new xmlBuilder($data);
-                echo $builder->build();
-                break;
-
-            default:
-                break;
-        };
+        /**
+         * we eliminated the long switch case using a simple factory
+         *
+         * now even if we have 100 different type of responses we don't have to add new cases here.
+         *
+         * if we pass the right type the factory will take care of it
+         */
     }
 }
