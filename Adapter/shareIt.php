@@ -11,16 +11,9 @@ namespace innoppl\designPatterns\adapter;
 
 class shareIt
 {
-    public function share($message)
+    public function share($message, socialInterface $media)
     {
-        $facebook = new Facebook();
-        $user = "myusername";
-        $password = "*****";
-        $facebook->post($user, $password, $message);
-
-        $twitter = new twitter();
-        $twitterUser = "myid";
-        $twitterPass = "test";
-        $twitter->post($message, $twitterUser, $twitterPass);
+        $media->connect();
+        $media-post($message);
     }
 }
