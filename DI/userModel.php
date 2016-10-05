@@ -19,27 +19,15 @@ class userModel
      * @param $data
      * Function to save data and to send email
      */
-    public function save($data)
+    public function save($data, Mysqli $db, PHPMailer $mail)
     {
-        $user = "root";
-        $pass = "123450";
-        $port = "8880";
-        $db = new Mysqli($user, $pass, $port);
         $result  = $db->save($data);
         if($result) {
-            $smtp = 'smtp.google.com';
-            $smtpUser = 'someuser@gmail.com';
-            $smtpPass = 'something';
-            $mail = new PHPMailer($smtp, $smtpUser, $smtpPass);
             $mail->send();
         }
 
-        /**
-         * we can say that the above code is bad for the follwing reasons
-         *
-         * 1) It's tightly coupled, any change to the mysqli or PHPMailer() classes will affect this class
-         *
-         * 2) When writing unit tests this tight dependencies can't be mocked with dummy objects.
-         */
+        //Now the above code doesn't needs to be changed for any changes on mysqli or PHPmailer, to make it better we can write an interface like adapter pattern to minimize the effect of those classes inside the save function
+
+        //when unit testing we can  send mock objects as parameters inside save function to test it.
     }
 }
